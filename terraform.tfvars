@@ -1,0 +1,1 @@
+artifacts-bucket = "pps-poc-cicd-artifacts-s3"
