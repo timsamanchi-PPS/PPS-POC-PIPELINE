@@ -31,7 +31,7 @@ resource "aws_codebuild_project" "tf-plan" {
 # terraform apply
 resource "aws_codebuild_project" "tf-apply" {
     description = "apply stage for terraform"
-    name = "tf-cicd-aqpply"
+    name = "tf-cicd-apply"
     service_role = aws_iam_role.tf-codebuild-role.arn
 
     artifacts {
@@ -100,14 +100,14 @@ resource "aws_codepipeline" "cicd-pipeline" {
             }
         }
     }
-    
-    # Stage Deploy 
+
+    # Stage Apply
     stage {
-        name = "Deploy"
+        name = "Apply"
         action {
-            name = "Deploy"
+            name = "Build"
             version = "1"
-            category = "Deploy"
+            category = "Build"
             owner = "AWS"
             input_artifacts = ["tf-code"]
 
@@ -117,4 +117,25 @@ resource "aws_codepipeline" "cicd-pipeline" {
             }
         }
     }
+
+
+
+
 }
+    # Stage Deploy 
+#     stage {
+#         name = "Deploy"
+#         action {
+#             name = "Deploy"
+#             version = "1"
+#             category = "Deploy"
+#             owner = "AWS"
+#             input_artifacts = ["tf-code"]
+
+#             provider = "CodeBuild"
+#             configuration = {
+#               ProjectName = "tf-cicd-apply"
+#             }
+#         }
+#     }
+ 
